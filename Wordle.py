@@ -42,6 +42,9 @@ def wordle():
         # Search through the dictionary and confirm that the word entered is in the dictionary
         if enteredWord not in FIVE_LETTER_WORDS:
             gw.show_message("Please enter a valid word.")
+        # Victory condition
+        elif (enteredWord == wordleWord):
+            gw.show_message(f"Congrats! You won in {gw.get_current_row() + 1} attempt{'s' if gw.get_current_row() > 0 else ''}.")
         # If the word is in the dictionary then move on to the next row
         else:
             # CHANGE THE ROW TO THE NEXT ROW
