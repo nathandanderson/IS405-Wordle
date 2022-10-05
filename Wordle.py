@@ -22,13 +22,18 @@ def wordle():
         x = 0
         enteredWordList = list()
         enteredWord = ''
+
         while x <= (N_COLS-1):
-            enteredWordList.append(gw.get_square_letter(gw.get_current_row(),x).lower())
-            if gw.get_square_letter(gw.get_current_row(),x).lower() == wordleWordList[x]:
+            current_letter = gw.get_square_letter(gw.get_current_row(),x)
+            enteredWordList.append(current_letter.lower())
+            if current_letter.lower() == wordleWordList[x]:
                 gw.set_square_color(gw.get_current_row(),x,CORRECT_COLOR)
+                gw.set_key_color(current_letter, CORRECT_COLOR)
             x=x+1
+
         for z in enteredWordList:
             enteredWord += z
+
         if enteredWord not in FIVE_LETTER_WORDS:
             gw.show_message("Please enter a valid word.")
         else:
