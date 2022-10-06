@@ -10,12 +10,12 @@ from dataclasses import MISSING
 import random
 
 from WordleDictionary import FIVE_LETTER_WORDS
-from WordleGraphics import CORRECT_COLOR, MISSING_COLOR, PRESENT_COLOR, UNKNOWN_COLOR, KEY_COLOR, WordleGWindow, N_COLS, N_ROWS
+from WordleGraphics import CORRECT_COLOR, MISSING_COLOR, PRESENT_COLOR, WordleGWindow, N_COLS, N_ROWS
 
 def wordle():
 
 # CHOOSE THE WORDLE WORD
-    wordleWord = FIVE_LETTER_WORDS[random.randint(0,len(FIVE_LETTER_WORDS) - 1)]
+    wordleWord = 'scans'#FIVE_LETTER_WORDS[random.randint(0,len(FIVE_LETTER_WORDS) - 1)]
     wordleWordList = list(wordleWord)
     print(wordleWord)
 
@@ -26,7 +26,7 @@ def wordle():
 
         # Loop through the inputted characters and construct a list based off of them
         for i in range(N_COLS) :
-            current_letter = gw.get_square_letter(gw.get_current_row(), i)
+            current_letter = gw.get_square_letter(gw.get_current_row(), i).lower()
             enteredWordList.append(current_letter.lower())
 
         # Form a word based on the inputed word list for searching through the dictionary
@@ -39,18 +39,40 @@ def wordle():
             return
 
         # THIS DOES THE COLORS FOR THE WORDLE BY LOOPING THROUGH A SERIES OF IF STATEMENTS TO ASSIGN THE CORRECT COLOR.
+        letterUsed = []
+        correctLetters = []
+
+        print(wordleWordList)
+        print(enteredWordList)
         for i in range(N_COLS) :
-            for y in enteredWordList:
-                current_letter = gw.get_square_letter(gw.get_current_row(), i)
-                if current_letter.lower() == wordleWordList[i]:
-                    gw.set_square_color(gw.get_current_row(), i, CORRECT_COLOR)
-                    gw.set_key_color(current_letter, CORRECT_COLOR)
-                elif current_letter.lower() in wordleWordList:
-                    gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
-                    gw.set_key_color(current_letter, PRESENT_COLOR)
-                else:
+            current_letter = gw.get_square_letter(gw.get_current_row(), i).lower()
+            print(current_letter)
+            if current_letter == wordleWordList[i] :
+                gw.set_square_color(gw.get_current_row(), i, CORRECT_COLOR)
+                gw.set_key_color(current_letter.upper(), CORRECT_COLOR)
+                letterUsed.append(current_letter)
+                correctLetters.append(current_letter)
+                print('Green' + str(letterUsed))
+
+        for i in range(N_COLS) :
+            current_letter = gw.get_square_letter(gw.get_current_row(), i).lower()
+            if (current_letter != wordleWordList[i]) :
+                if current_letter in wordleWordList :
+                    letterUsed.append(current_letter)
+                    print(wordleWordList.count(current_letter), letterUsed.count(current_letter))
+                    print('Yellows' + str(letterUsed))
+                    if (wordleWordList.count(current_letter) >= letterUsed.count(current_letter)) :
+                        gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
+                        if (current_letter not in correctLetters) :
+                            gw.set_key_color(current_letter.upper(), PRESENT_COLOR)
+                    else :
+                        gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)
+                        if (current_letter not in correctLetters) :
+                            gw.set_key_color(current_letter.upper(), MISSING_COLOR)
+                else :
                     gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)
-                    gw.set_key_color(current_letter, MISSING_COLOR)
+                    if (current_letter not in correctLetters) :
+                        gw.set_key_color(current_letter.upper(), MISSING_COLOR)
 
         # Victory condition
         if (enteredWord == wordleWord):
