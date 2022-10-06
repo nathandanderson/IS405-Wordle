@@ -15,7 +15,7 @@ from WordleGraphics import CORRECT_COLOR, MISSING_COLOR, PRESENT_COLOR, WordleGW
 def wordle():
 
 # CHOOSE THE WORDLE WORD
-    wordleWord = 'scans'#FIVE_LETTER_WORDS[random.randint(0,len(FIVE_LETTER_WORDS) - 1)]
+    wordleWord = FIVE_LETTER_WORDS[random.randint(0,len(FIVE_LETTER_WORDS) - 1)]
     wordleWordList = list(wordleWord)
     print(wordleWord)
 
