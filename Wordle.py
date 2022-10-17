@@ -38,7 +38,7 @@ def wordle():
             gw.set_current_row(gw.get_current_row())
             return
 
-        # THIS DOES THE COLORS FOR THE WORDLE BY LOOPING THROUGH A SERIES OF IF STATEMENTS TO ASSIGN THE CORRECT COLOR.
+        # THIS DOES THE COLORS FOR THE WORDLE BY LOOPING THROUGH A SERIES OF IF STATEMENTS TO ASSIGN THE CORRECT COLOR. 
         letterUsed = []
         correctLetters = []
 
